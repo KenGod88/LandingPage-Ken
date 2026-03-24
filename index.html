@@ -108,6 +108,13 @@ color:#00e5ff;
 opacity:0.85;
 }
 
+.visits{
+margin-top:10px;
+font-size:12px;
+opacity:0.5;
+color:#00e5ff;
+}
+
 </style>
 
 </head>
@@ -210,8 +217,26 @@ NFC Business Card
 <div class="git">
 $ git commit -m "fix: job"
 </div>
+<div class="visits">
+$ git checkout feature/visitors: <span id="visits"></span>
+</div>
 
 </div>
 
 </body>
 </html>
+
+
+<script>
+if (!localStorage.getItem("visited")) {
+    fetch("/counter.php");
+    localStorage.setItem("visited", "true");
+}
+
+// ALTIJD ophalen voor display (maar zonder verhogen)
+fetch("/counter.php?read=1")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("visits").innerText =  data;
+  });
+</script>
