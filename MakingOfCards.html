@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Making Of Cards - 3D Printer Timelapse</title>
+
+<style>
+:root {
+	--bg-a: #1a0029;
+	--bg-b: #000000;
+	--cyan: #00e5ff;
+	--pink: #ff00c8;
+	--card-bg: rgba(0, 0, 0, 0.68);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Courier New", monospace;
+	color: white;
+	background: radial-gradient(circle at top, var(--bg-a), var(--bg-b));
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.card {
+	width: min(960px, 100%);
+	border-radius: 14px;
+	background: var(--card-bg);
+	border: 1px solid var(--pink);
+	backdrop-filter: blur(6px);
+	box-shadow: 0 0 15px var(--pink), 0 0 40px var(--cyan);
+	overflow: hidden;
+}
+
+.header {
+	padding: 28px 28px 18px;
+	border-bottom: 1px solid rgba(255, 0, 200, 0.35);
+}
+
+.title {
+	margin: 0;
+	color: var(--cyan);
+	font-size: clamp(26px, 4vw, 38px);
+	text-shadow: 0 0 8px var(--cyan), 0 0 18px var(--cyan);
+}
+
+.subtitle {
+	margin: 10px 0 0;
+	color: var(--pink);
+	font-size: clamp(14px, 2.4vw, 18px);
+	text-shadow: 0 0 10px var(--pink);
+}
+
+.content {
+	padding: 24px 28px 30px;
+	display: grid;
+	gap: 22px;
+}
+
+video {
+	width: 100%;
+	border-radius: 10px;
+	border: 1px solid var(--cyan);
+	box-shadow: 0 0 12px rgba(0, 229, 255, 0.55);
+	background: #050505;
+}
+
+.speed-controls {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 15px;
+	color: #f2f2f2;
+}
+
+.speed-controls label {
+	color: var(--cyan);
+	font-weight: bold;
+}
+
+.speed-controls select {
+	background: rgba(0, 0, 0, 0.75);
+	color: white;
+	border: 1px solid var(--pink);
+	border-radius: 6px;
+	padding: 6px 10px;
+	font-family: "Courier New", monospace;
+}
+
+.note {
+	margin: 0;
+	font-size: clamp(15px, 2.2vw, 18px);
+	line-height: 1.6;
+	color: #f2f2f2;
+}
+
+.highlight {
+	color: var(--cyan);
+}
+
+.steps {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: grid;
+	gap: 10px;
+}
+
+.steps li {
+	padding: 10px 12px;
+	border-left: 3px solid var(--pink);
+	background: rgba(255, 255, 255, 0.04);
+	border-radius: 6px;
+}
+
+.steps strong {
+	color: var(--pink);
+}
+
+.back {
+	display: inline-block;
+	margin-top: 6px;
+	color: black;
+	text-decoration: none;
+	font-weight: bold;
+	background: linear-gradient(90deg, var(--pink), var(--cyan));
+	border-radius: 8px;
+	padding: 10px 16px;
+	transition: 0.2s ease;
+}
+
+.back:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 0 12px var(--pink), 0 0 20px var(--cyan);
+}
+
+@media (max-width: 640px) {
+	.header {
+		padding: 20px 18px 14px;
+	}
+
+	.content {
+		padding: 18px;
+	}
+}
+</style>
+</head>
+
+<body>
+	<main class="card">
+		<header class="header">
+			<h1 class="title">3D Printer Timelapse</h1>
+			<p class="subtitle">Van lege printplaat tot afgewerkte kaart</p>
+		</header>
+
+		<section class="content">
+			<video id="printerVideo" controls autoplay muted loop playsinline>
+				<source src="TimeLapsCards.mp4" type="video/mp4">
+				Je browser ondersteunt deze video-tag niet.
+			</video>
+
+			<div class="speed-controls">
+				<label for="speedSelect">Snelheid:</label>
+				<select id="speedSelect">
+					<option value="1">Normaal (1x)</option>
+					<option value="0.75">Trager (0.75x)</option>
+					<option value="0.5">Half tempo (0.5x)</option>
+					<option value="0.25">Zeer traag (0.25x)</option>
+					<option value="0.125" >Ultra traag (0.125x)</option>
+					<option value="0.1" selected>Extreem traag (0.1x)</option>
+				</select>
+			</div>
+
+			<p class="note">
+				Hier zie je een volledige <span class="highlight">timelapse</span> van mijn 3D-printer tijdens het maken van een kaart.
+				Wat normaal een half uurtje duurt, zie je hier in enkele seconden.
+			</p>
+
+			<ul class="steps">
+				<li><strong>Laag 1:</strong> de eerste basislaag wordt nauwkeurig uitgelegd met een uitsparing voor de NFC tag. </li>
+				<li><strong>Middenfase:</strong> Dan legt de printer de volgende lagen er op zodat de Tag ingewerkt wordt.</li>
+				<li><strong>Finale:</strong> Vermits ik niet werk met een meerkleuren printer, bouw ik elke laag apart op in een andere kleur.</li>
+			</ul>
+
+			<a class="back" href="index.html">Terug naar home</a>
+		</section>
+	</main>
+
+	<script>
+		const video = document.getElementById("printerVideo");
+		const speedSelect = document.getElementById("speedSelect");
+
+		video.playbackRate = Number(speedSelect.value);
+
+		speedSelect.addEventListener("change", function () {
+			video.playbackRate = Number(speedSelect.value);
+		});
+	</script>
+</body>
+</html>
